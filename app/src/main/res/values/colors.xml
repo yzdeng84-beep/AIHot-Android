@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary brand colors -->
+    <color name="background_dark">#FF060814</color>
+    <color name="surface_dark">#FF0F1123</color>
+    <color name="accent_cyan">#FF22D3EE</color>
+    <color name="accent_cyan_dark">#FF0891B2</color>
+
+    <!-- UI colors -->
+    <color name="white">#FFFFFFFF</color>
+    <color name="text_primary">#FFF1F5F9</color>
+    <color name="text_secondary">#FF94A3B8</color>
+    <color name="progress_bar">#FF22D3EE</color>
+
+    <!-- Splash screen -->
+    <color name="splash_background">#FF060814</color>
+
+    <!-- Error view -->
+    <color name="error_text">#FF94A3B8</color>
+    <color name="retry_button_bg">#FF22D3EE</color>
+    <color name="retry_button_text">#FF060814</color>
+
+    <!-- Swipe refresh -->
+    <color name="swipe_refresh_1">#FF22D3EE</color>
+    <color name="swipe_refresh_2">#FF0891B2</color>
+    <color name="swipe_refresh_3">#FF06B6D4</color>
+</resources>

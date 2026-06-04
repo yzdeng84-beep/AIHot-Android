@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Simplified AIHOT icon for splash screen: stylized "AI" -->
+    <path
+        android:fillColor="#FF22D3EE"
+        android:pathData="M34,65L38,42L44,42L50,65L46,65L45,59L37,59L36,65ZM38,56L44,56L43,51L42,46L40,46L39,51Z" />
+    <path
+        android:fillColor="#FF22D3EE"
+        android:pathData="M52,65L52,42L62,42Q68,42 70,46Q72,50 70,54Q68,56 66,57L72,65L67,65L62,58L56,58L56,65ZM56,55L62,55Q64,55 65,54Q66,52 64,49Q62,46 60,46L56,46Z" />
+</vector>

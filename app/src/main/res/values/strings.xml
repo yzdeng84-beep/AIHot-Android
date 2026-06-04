@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI HOT</string>
+    <string name="loading">加载中…</string>
+    <string name="error_title">网络连接失败</string>
+    <string name="error_message">请检查您的网络连接后重试</string>
+    <string name="retry_button">重试</string>
+    <string name="pull_to_refresh">下拉刷新</string>
+    <string name="no_network">无网络连接</string>
+    <string name="network_restored">网络已恢复，正在重新加载…</string>
+</resources>
