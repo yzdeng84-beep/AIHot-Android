@@ -196,8 +196,8 @@ class MainActivity : AppCompatActivity() {
 
         errorTitle.text = when {
             !isNetworkAvailable -> getString(R.string.no_network)
-            errorCode == ERROR_TIMEOUT -> "请求超时"
-            errorCode == ERROR_HOST_LOOKUP -> "无法连接到服务器"
+            errorCode == WebViewClient.ERROR_TIMEOUT -> "请求超时"
+            errorCode == WebViewClient.ERROR_HOST_LOOKUP -> "无法连接到服务器"
             else -> getString(R.string.error_title)
         }
 
