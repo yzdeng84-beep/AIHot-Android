@@ -6,6 +6,10 @@ on:
     tags: ['v*']
   workflow_dispatch:
 
+permissions:
+  contents: write
+  actions: read
+
 jobs:
   build:
     name: Build APK
@@ -71,7 +75,7 @@ jobs:
         with:
           name: "AI HOT ${{ github.ref_name }}"
           body_path: release_notes.md
-          files: app-debug.apk
+          files: app/build/outputs/apk/debug/app-debug.apk
           draft: false
           prerelease: false
         env:
