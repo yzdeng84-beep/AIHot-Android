@@ -4,13 +4,11 @@ on:
   push:
     branches: [main]
     tags: ['v*']
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
   build:
-    name: Build Debug APK
+    name: Build APK
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -28,70 +26,52 @@ jobs:
       - name: Build debug APK
         run: chmod +x ./gradlew && ./gradlew assembleDebug
 
-      - name: Upload debug APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: AIHOT-debug
+          name: AIHOT-APK
           path: app/build/outputs/apk/debug/app-debug.apk
 
   release:
-    name: Create Release
+    name: Create GitHub Release
     if: startsWith(github.ref, 'refs/tags/v')
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - name: Download APK artifact
+        uses: actions/download-artifact@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Build release APK
-        run: chmod +x ./gradlew && ./gradlew assembleRelease
-
-      - name: Sign release APK
-        if: env.KEYSTORE_BASE64 != ''
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: |
-          echo "$KEYSTORE_BASE64" | base64 -d > keystore.jks
-          cp app/build/outputs/apk/release/app-release-unsigned.apk app-release-unsigned.apk
-          $ANDROID_HOME/build-tools/35.0.0/apksigner sign \
-            --ks keystore.jks \
-            --ks-pass pass:"$KEYSTORE_PASSWORD" \
-            --key-pass pass:"$KEY_PASSWORD" \
-            --out app-release-signed.apk \
-            app-release-unsigned.apk
+          name: AIHOT-APK
 
       - name: Generate release notes
-        id: notes
         run: |
-          echo "## 📱 AI HOT v${GITHUB_REF#refs/tags/v}" > release_notes.md
-          echo "" >> release_notes.md
-          echo "AI HOT 安卓客户端，访问 [aihot.virxact.com](https://aihot.virxact.com/) 的 AI 热点资讯。" >> release_notes.md
-          echo "" >> release_notes.md
-          echo "### 安装说明" >> release_notes.md
-          echo "1. 下载 APK 文件" >> release_notes.md
-          echo "2. 允许安装来自未知来源的应用" >> release_notes.md
-          echo "3. 打开安装即可使用" >> release_notes.md
+          cat > release_notes.md << 'EOF'
+          ## 📱 AI HOT - Android 客户端
+
+          将 [aihot.virxact.com](https://aihot.virxact.com/) 封装为原生 Android App，方便在手机上随时查看 AI 热点资讯。
+
+          ### ✨ 功能
+          - 原生安卓体验，Splash 启动屏
+          - 下拉刷新获取最新资讯
+          - 返回键智能导航网页历史
+          - 断网自动检测 + 一键重试
+          - 深色主题，与网站风格一致
+
+          ### 📥 安装说明
+          1. 下载下方 `app-debug.apk` 文件
+          2. 在手机上打开，允许"安装未知来源应用"
+          3. 安装完成即可使用
+
+          ---
+          本项目非官方出品，仅供学习交流。内容版权归 [AI HOT](https://aihot.virxact.com/) 所有。
+          EOF
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "AI HOT v${{ github.ref_name }}"
+          name: "AI HOT ${{ github.ref_name }}"
           body_path: release_notes.md
-          files: |
-            app/build/outputs/apk/release/app-release.apk
-            app/build/outputs/apk/debug/app-debug.apk
+          files: app-debug.apk
           draft: false
           prerelease: false
         env:
